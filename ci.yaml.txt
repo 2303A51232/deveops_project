@@ -1,0 +1,34 @@
+name Node.js CI
+
+on
+  push
+    branches [ main ]
+  pull_request
+    branches [ main ]
+
+jobs
+  build
+    runs-on ubuntu-latest
+
+    steps
+      - uses actionscheckout@v3
+
+      - name Setup Node
+        uses actionssetup-node@v3
+        with
+          node-version 18
+
+      - name Install Backend
+        run 
+          cd backend
+          npm install
+
+      - name Install Frontend
+        run 
+          cd frontend
+          npm install
+
+      - name Build Frontend
+        run 
+          cd frontend
+          npm run build
